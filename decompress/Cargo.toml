@@ -1,0 +1,12 @@
+[package]
+name = "decompress"
+version = "0.1.0"
+authors = ["amreo <amreo@users.noreply.github.com>"]
+edition = "2018"
+cargo-features = ["rename-dependency"]
+
+[dependencies.quicklz]
+version = "0.2.0"
+
+[dependencies.byteorder]
+version = "1"
