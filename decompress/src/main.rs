@@ -1,8 +1,10 @@
 use std::fs::File;
-use std::io::{Read, Write, Seek};
+use std::io::{Read, Write};
 use byteorder::{LittleEndian, ReadBytesExt};
 
 fn main() {
+    let argc = std::env::args().len();
+
     let mut f = File::open("cinco.res").unwrap();
     let mut data = vec!();
     let mut out_data = vec!();
@@ -29,6 +31,10 @@ fn main() {
         match quicklz::decompress(&mut r, data.len() as u32) {
             Ok(dec) => {
                 println!("{}", dec.len());
+                if argc == 2 {
+                    let mut out = File::create(format!("out{}.res", i)).unwrap();
+                    out.write_all(&dec).unwrap();
+                }
                 out_data.extend(&dec);
             },
             Err(quicklz::Error::SizeLimitExceeded {dec:_, max:_}) => {
